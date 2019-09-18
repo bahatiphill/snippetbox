@@ -11,6 +11,6 @@ type Snippet struct {
 	ID int
 	Title string
 	Content string
-	Created time.time
-	Expires time.time
+	Created time.Time
+	Expires time.Time
 }
