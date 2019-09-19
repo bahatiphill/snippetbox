@@ -5,12 +5,16 @@ import (
 	"path/filepath"
 	"snippetbox-modules/pkg/models"
 	"time"
+	"net/url"
 )
 
 type templateData struct {
 	CurrentYear int
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
+	FormData	url.Values
+	FormErrors	map[string]string
+
 }
 
 // Function which return a human readablr time.Time object
