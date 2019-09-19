@@ -1,8 +1,12 @@
 package main
 
 import "net/http"
+import "github.com/justinas/alice"
 
 func (app *application) routes() http.Handler {
+
+	//Create a middelware chain 
+	standardMiddleware := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", app.home)
@@ -13,5 +17,5 @@ func (app *application) routes() http.Handler {
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	// wrap the exsisting chain witrh the recoverPanic middleware
-	return app.recoverPanic(app.logRequest(secureHeaders(mux)))
+	return standardMiddleware.Then(mux)
 }
